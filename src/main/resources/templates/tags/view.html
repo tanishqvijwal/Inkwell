@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tag Notes | Inkwell</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <a href="/" class="logo">inkwell<span>.</span></a>
+
+    <nav>
+        <a th:href="@{/}">Home</a>
+        <a th:href="@{/notes}">My Notes</a>
+        <a th:href="@{/folders}">Folders</a>
+        <a th:href="@{/tags}" class="active">Tags</a>
+    </nav>
+
+    <div class="profile">Personal Space</div>
+
+</header>
+
+<main class="container">
+
+    <section class="notes-section">
+
+        <p class="eyebrow">TAG COLLECTION</p>
+
+        <div class="section-heading">
+
+            <div>
+
+                <h2 th:text="${tag.name}">
+                    Tag Name
+                </h2>
+
+                <p th:text="${#lists.size(notes) + ' notes with this tag'}">
+                    0 notes
+                </p>
+
+            </div>
+
+            <a th:href="@{/tags}" class="cancel-button">
+                Back to Tags
+            </a>
+
+        </div>
+
+        <!-- Empty State -->
+        <div th:if="${#lists.isEmpty(notes)}"
+             class="empty-state">
+
+            <div class="empty-icon">#</div>
+
+            <h3>No notes found.</h3>
+
+            <p>
+                Assign this tag to a note to see it here.
+            </p>
+
+            <a th:href="@{/notes}" class="create-button">
+                View My Notes
+            </a>
+
+        </div>
+
+        <!-- Notes Grid -->
+        <div class="notes-grid">
+
+            <article class="note-card"
+                     th:each="note : ${notes}">
+
+                <p class="note-date"
+                   th:text="${#temporals.format(note.updatedAt, 'dd MMM yyyy')}">
+                </p>
+
+                <h3 th:text="${note.title}">
+                    Note Title
+                </h3>
+
+                <p class="note-content"
+                   th:text="${notePreviews[note.id]}">
+                    Note Content
+                </p>
+
+                <div class="note-actions">
+
+                    <a th:href="@{/notes/view/{id}(id=${note.id})}">
+                        View
+                    </a>
+
+                    <a th:href="@{/notes/edit/{id}(id=${note.id})}">
+                        Edit
+                    </a>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>

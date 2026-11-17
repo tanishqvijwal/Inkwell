@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Folder | Inkwell</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <a href="/" class="logo">inkwell<span>.</span></a>
+
+    <nav>
+        <a href="/">Home</a>
+        <a th:href="@{/notes}">My Notes</a>
+        <a th:href="@{/folders}" class="active">Folders</a>
+    </nav>
+
+    <div class="profile">Personal Space</div>
+
+</header>
+
+<main class="container">
+
+    <section class="editor-section">
+
+        <p class="eyebrow">YOUR COLLECTION</p>
+
+        <h1 th:text="${folder.id == null ? 'Create a folder.' : 'Rename folder.'}">
+            Create a folder.
+        </h1>
+
+        <form th:action="@{/folders/save}"
+              th:object="${folder}"
+              method="post">
+
+            <input type="hidden" th:field="*{id}">
+
+            <input type="text"
+                   th:field="*{name}"
+                   placeholder="Enter folder name..."
+                   class="title-input"
+                   maxlength="100"
+                   required>
+
+            <div class="editor-actions">
+
+                <button type="submit" class="create-button">
+                    Save Folder
+                </button>
+
+                <a th:href="@{/folders}" class="cancel-button">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </section>
+
+</main>
+
+</body>
+</html>

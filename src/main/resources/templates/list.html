@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tags | Inkwell</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="page-container">
+
+    <header>
+        <h1>Inkwell</h1>
+        <nav>
+            <a th:href="@{/}">Home</a>
+            <a th:href="@{/notes}">My Notes</a>
+            <a th:href="@{/folders}">Folders</a>
+            <a th:href="@{/tags}" class="active">Tags</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="page-heading">
+            <div>
+                <h2>Tags</h2>
+                <p>Organise your thoughts with tags.</p>
+            </div>
+
+            <a th:href="@{/tags/new}" class="create-button">
+                + Create Tag
+            </a>
+        </div>
+
+        <div class="tags-grid">
+
+            <div class="tag-card" th:each="tag : ${tags}">
+
+                <span th:text="${tag.name}"></span>
+
+                <form th:action="@{/tags/delete/{id}(id=${tag.id})}"
+                      method="post">
+
+                    <button type="submit"
+                            onclick="return confirm('Delete this tag?')">
+                        Delete
+                    </button>
+
+                </form>
+
+            </div>
+
+            <p th:if="${#lists.isEmpty(tags)}">
+                No tags created yet.
+            </p>
+
+        </div>
+    </main>
+
+</div>
+
+</body>
+</html>

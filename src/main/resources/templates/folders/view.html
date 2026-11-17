@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Folder | Inkwell</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="/" class="logo">inkwell<span>.</span></a>
+
+    <nav>
+        <a href="/">Home</a>
+        <a th:href="@{/notes}">My Notes</a>
+        <a th:href="@{/folders}" class="active">Folders</a>
+    </nav>
+
+    <div class="profile">Personal Space</div>
+</header>
+
+<main class="container">
+
+    <section class="notes-section">
+
+        <p class="eyebrow">YOUR COLLECTION</p>
+
+        <div class="section-heading">
+
+            <div>
+                <h2 th:text="${folder.name}">Folder Name</h2>
+
+                <p th:text="${#lists.size(folder.notes) + ' notes in this folder'}">
+                    0 notes in this folder
+                </p>
+            </div>
+
+            <a th:href="@{/folders}" class="cancel-button">
+                Back to Folders
+            </a>
+
+        </div>
+
+        <div th:if="${#lists.isEmpty(folder.notes)}"
+             class="empty-state">
+
+            <div class="empty-icon">✎</div>
+
+            <h3>This folder is empty.</h3>
+
+            <p>Assign notes to this folder to organise them here.</p>
+
+            <a th:href="@{/notes}" class="create-button">
+                View My Notes
+            </a>
+
+        </div>
+
+        <div class="notes-grid">
+
+            <article class="note-card"
+                     th:each="note : ${folder.notes}">
+
+                <p class="note-date"
+                   th:text="${#temporals.format(note.updatedAt, 'dd MMM yyyy')}">
+                </p>
+
+                <h3 th:text="${note.title}">Note title</h3>
+
+                <div class="note-actions">
+
+                    <a th:href="@{/notes/view/{id}(id=${note.id})}">
+                        View
+                    </a>
+
+                    <a th:href="@{/notes/edit/{id}(id=${note.id})}">
+                        Edit
+                    </a>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>

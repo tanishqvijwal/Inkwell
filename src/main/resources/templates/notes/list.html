@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Notes | Inkwell</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="/" class="logo">inkwell<span>.</span></a>
+
+    <nav>
+        <a th:href="@{/}" >Home</a>
+        <a th:href="@{/notes}" class="active">My Notes</a>
+        <a th:href="@{/folders}">Folders</a>
+        <a th:href="@{/tags}">Tags</a>
+    </nav>
+
+    <div class="profile">Personal Space</div>
+</header>
+
+<main class="container">
+
+    <section class="notes-section">
+
+        <p class="eyebrow">YOUR COLLECTION</p>
+
+        <div class="section-heading">
+            <h2 th:text="${filter == 'favourites' ? 'Favourite Notes' :
+                  (filter == 'pinned' ? 'Pinned Notes' : 'All Notes')}">
+                All Notes
+            </h2>
+
+            <a th:href="@{/notes/new}" class="create-button">
+                + Create Note
+            </a>
+        </div>
+
+        <div class="notes-filter">
+
+            <a th:href="@{/notes}"
+               th:classappend="${filter == 'all'} ? ' active-filter'">
+                All Notes
+            </a>
+
+            <a th:href="@{/notes(filter='favourites')}"
+               th:classappend="${filter == 'favourites'} ? ' active-filter'">
+                ★ Favourites
+            </a>
+
+            <a th:href="@{/notes(filter='pinned')}"
+               th:classappend="${filter == 'pinned'} ? ' active-filter'">
+                📌 Pinned
+            </a>
+
+        </div>
+
+        <!-- Search Notes -->
+
+        <!-- Search and Sort Notes -->
+        <form th:action="@{/notes}" method="get" class="search-form">
+
+            <!-- Preserve selected filter -->
+            <input type="hidden" name="filter" th:value="${filter}">
+
+            <!-- Search -->
+            <input type="text"
+                   name="keyword"
+                   th:value="${keyword}"
+                   placeholder="Search your notes..."
+                   class="search-input">
+
+            <!-- Sorting -->
+            <select name="sortBy" class="sort-select">
+
+                <option value="recent"
+                        th:selected="${sortBy == 'recent'}">
+                    Recently Updated
+                </option>
+
+                <option value="oldest"
+                        th:selected="${sortBy == 'oldest'}">
+                    Oldest Updated
+                </option>
+
+                <option value="titleAsc"
+                        th:selected="${sortBy == 'titleAsc'}">
+                    Title (A–Z)
+                </option>
+
+                <option value="titleDesc"
+                        th:selected="${sortBy == 'titleDesc'}">
+                    Title (Z–A)
+                </option>
+
+            </select>
+
+            <button type="submit" class="search-button">
+                Apply
+            </button>
+
+            <a th:href="@{/notes}" class="cancel-button">
+                Clear
+            </a>
+
+        </form>
+
+        <div th:if="${#lists.isEmpty(notes)}" class="empty-state">
+
+            <div class="empty-icon">✎</div>
+
+            <h3 th:text="${keyword != null and !keyword.isEmpty()
+                    ? 'No matching notes found.'
+                    : 'No notes yet.'}">
+                No notes yet.
+            </h3>
+
+            <p th:text="${keyword != null and !keyword.isEmpty()
+                    ? 'Try searching with a different keyword.'
+                    : 'Start writing your first note.'}">
+                Start writing your first note.
+            </p>
+
+        </div>
+
+        <div class="notes-grid">
+
+            <article class="note-card"
+                     th:each="note : ${notes}">
+
+                <p class="note-date"
+                   th:text="${#temporals.format(note.updatedAt, 'dd MMM yyyy')}">
+                </p>
+
+                <h3 th:text="${note.title}">Note title</h3>
+
+                <p class="note-content"
+                   th:text="${notePreviews[note.id]}">
+                    Note content
+                </p>
+
+                <!-- Display assigned tags -->
+                <div class="note-tags"
+                     th:if="${not #sets.isEmpty(note.tags)}">
+
+                    <a th:each="tag : ${note.tags}"
+                       th:href="@{/tags/{id}(id=${tag.id})}"
+                       class="note-tag"
+                       th:text="${tag.name}">
+                    </a>
+
+                </div>
+
+                <div class="note-actions">
+
+                    <form th:action="@{/notes/favourite/{id}(id=${note.id})}"
+                          method="post">
+
+                        <button type="submit"
+                                class="icon-action"
+                                th:text="${note.favourite ? '★ Favourited' : '☆ Favourite'}">
+                        </button>
+
+                    </form>
+
+                    <form th:action="@{/notes/pin/{id}(id=${note.id})}"
+                          method="post">
+
+                        <button type="submit"
+                                class="icon-action"
+                                th:text="${note.pinned ? 'Unpin' : 'Pin'}">
+                        </button>
+
+                    </form>
+
+                    <a th:href="@{/notes/view/{id}(id=${note.id})}">
+                        View
+                    </a>
+
+                    <a th:href="@{/notes/edit/{id}(id=${note.id})}">
+                        Edit
+                    </a>
+
+                    <form th:action="@{/notes/delete/{id}(id=${note.id})}"
+                          method="post"
+                          onsubmit="return confirm('Delete this note?');">
+
+                        <button type="submit" class="delete-button">
+                            Delete
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>

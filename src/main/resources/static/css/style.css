@@ -1,0 +1,834 @@
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #f7f5f0;
+    color: #292720;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.navbar {
+    height: 78px;
+    padding: 0 8%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #e5e1d8;
+}
+
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 29px;
+    font-weight: 700;
+    color: #292720;
+    text-decoration: none;
+}
+
+.logo span {
+    color: #a46c45;
+}
+
+nav {
+    display: flex;
+    gap: 35px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #77736a;
+    font-size: 14px;
+}
+
+nav a.active {
+    color: #292720;
+    font-weight: 700;
+}
+
+.profile {
+    font-size: 13px;
+    color: #77736a;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 80px 30px;
+}
+
+.welcome-section {
+    padding-bottom: 75px;
+    border-bottom: 1px solid #e5e1d8;
+}
+
+.eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #a46c45;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 6vw, 65px);
+    font-weight: 500;
+    letter-spacing: -2px;
+}
+
+h1 span {
+    color: #a46c45;
+}
+
+.subtitle {
+    margin-top: 18px;
+    color: #77736a;
+    font-size: 16px;
+}
+
+.create-button {
+    margin-top: 32px;
+    padding: 14px 24px;
+    background: #292720;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    transition: background 0.2s;
+}
+
+.create-button:hover {
+    background: #a46c45;
+}
+
+.notes-section {
+    padding-top: 65px;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.section-heading h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    font-weight: 500;
+}
+
+.section-heading a {
+    color: #a46c45;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.empty-state {
+    margin-top: 35px;
+    padding: 65px 20px;
+    text-align: center;
+    border: 1px dashed #d9d3c8;
+}
+
+.empty-icon {
+    font-size: 35px;
+    color: #a46c45;
+    margin-bottom: 15px;
+}
+
+.empty-state h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 25px;
+    font-weight: 500;
+}
+
+.empty-state p {
+    margin-top: 12px;
+    font-size: 13px;
+    color: #77736a;
+    line-height: 1.7;
+}
+
+footer {
+    margin-top: 90px;
+    padding-top: 25px;
+    border-top: 1px solid #e5e1d8;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #99948a;
+}
+
+@media (max-width: 650px) {
+    .navbar {
+        padding: 0 5%;
+    }
+
+    nav {
+        gap: 12px;
+    }
+
+    nav a {
+        font-size: 11px;
+    }
+
+    .profile {
+        display: none;
+    }
+
+    .container {
+        padding: 55px 20px;
+    }
+
+    .section-heading h2 {
+        font-size: 27px;
+    }
+}
+
+/* NOTE COLLECTION */
+
+.notes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+    margin-top: 35px;
+}
+
+.note-card {
+    padding: 28px;
+    background: #fffefa;
+    border: 1px solid #e5e1d8;
+    min-width: 0;
+}
+
+.note-date {
+    font-size: 11px;
+    color: #a46c45;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+
+.note-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 25px;
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+
+.note-content {
+    color: #77736a;
+    font-size: 13px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    max-height: 100px;
+    overflow: hidden;
+}
+
+.note-actions {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-top: 25px;
+    padding-top: 18px;
+    border-top: 1px solid #e5e1d8;
+}
+
+.note-actions a,
+.delete-button {
+    color: #a46c45;
+    font-size: 12px;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.note-actions form {
+    margin-left: auto;
+}
+
+.delete-button {
+    color: #b44b42;
+}
+
+.create-button {
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+}
+
+.section-heading .create-button {
+    margin-top: 0;
+}
+
+/* NOTE EDITOR */
+
+.editor-section {
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.editor-section h1 {
+    margin-bottom: 35px;
+}
+
+.title-input {
+    width: 100%;
+    padding: 18px 0;
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    color: #292720;
+    border: none;
+    border-bottom: 1px solid #e5e1d8;
+    outline: none;
+    background: transparent;
+}
+
+.content-input {
+    width: 100%;
+    margin-top: 25px;
+    padding: 15px 0;
+    min-height: 300px;
+    resize: vertical;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #292720;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.9;
+}
+
+.title-input:focus,
+.content-input:focus {
+    border-color: #a46c45;
+}
+
+.editor-actions {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    margin-top: 25px;
+}
+
+.cancel-button {
+    color: #77736a;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.view-content {
+    margin-top: 30px;
+    padding: 25px 0;
+    border-top: 1px solid #e5e1d8;
+    color: #555148;
+    font-size: 15px;
+    line-height: 2;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    min-height: 200px;
+}
+
+@media (max-width: 650px) {
+    .notes-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .note-card {
+        padding: 22px;
+    }
+
+    .title-input {
+        font-size: 24px;
+    }
+
+    .section-heading {
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+}
+
+
+/* FOLDER MANAGEMENT */
+
+.folder-icon {
+    font-size: 30px;
+    color: #a46c45;
+    margin-bottom: 18px;
+}
+
+.error-message {
+    margin-top: 25px;
+    padding: 15px;
+    background: #f8e8e5;
+    color: #a13e35;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.note-actions form {
+    display: inline;
+}
+
+.note-actions form button {
+    margin-left: 0;
+}
+
+.form-group {
+    margin-top: 25px;
+}
+
+.folder-select {
+    width: 100%;
+    padding: 13px;
+    margin-top: 10px;
+    border: 1px solid #d8d0c5;
+    background: #fffdf9;
+    color: #39352f;
+    font-family: inherit;
+    font-size: 15px;
+    outline: none;
+}
+
+.folder-select:focus {
+    border-color: #a46c45;
+}
+
+.tags-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-top: 30px;
+}
+
+.tag-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 15px 20px;
+    border: 1px solid #e2dbd1;
+    background: #fffdf9;
+}
+
+.tag-card span {
+    color: #594b3e;
+    font-size: 15px;
+}
+
+.tag-card button {
+    border: none;
+    background: transparent;
+    color: #a13e35;
+    cursor: pointer;
+}
+
+.tag-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.tag-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    border: 1px solid #e2dbd1;
+    background: #fffdf9;
+    color: #594b3e;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.tag-option input {
+    accent-color: #a46c45;
+}
+
+.search-form {
+    display: flex;
+    gap: 12px;
+    margin: 30px 0;
+}
+
+.search-input {
+    flex: 1;
+    padding: 13px 16px;
+    border: 1px solid #d8d0c5;
+    background: #fffdf9;
+    font-family: inherit;
+    font-size: 15px;
+    outline: none;
+}
+
+.search-input:focus {
+    border-color: #a46c45;
+}
+
+.search-button {
+    padding: 12px 22px;
+    border: none;
+    background: #a46c45;
+    color: white;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.search-button:hover {
+    background: #895735;
+}
+
+.sort-select {
+    padding: 12px 15px;
+    border: 1px solid #d8d0c5;
+    background: #fffdf9;
+    color: #594b3e;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    cursor: pointer;
+}
+
+.sort-select:focus {
+    border-color: #a46c45;
+}
+
+.icon-action {
+    border: none;
+    background: transparent;
+    color: #a46c45;
+    font-family: inherit;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.icon-action:hover {
+    color: #76583e;
+}
+
+.notes-filter {
+    display: flex;
+    gap: 25px;
+    margin: 25px 0;
+    border-bottom: 1px solid #e2dbd1;
+    padding-bottom: 15px;
+}
+
+.notes-filter a {
+    color: #81776c;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.notes-filter a:hover,
+.notes-filter a.active-filter {
+    color: #a46c45;
+    font-weight: 600;
+}
+
+/* Rich Text Editor */
+
+.editor-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px;
+    margin-top: 20px;
+    border: 1px solid #d8d0c5;
+    border-bottom: none;
+    background: #f5f1e9;
+}
+
+.editor-toolbar button {
+    min-width: 38px;
+    padding: 8px 12px;
+    border: 1px solid #ddd4c8;
+    background: #fffdf9;
+    color: #594b3e;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.editor-toolbar button:hover {
+    background: #eee7dc;
+}
+
+.rich-editor {
+    min-height: 300px;
+    padding: 20px;
+    border: 1px solid #d8d0c5;
+    background: #fffdf9;
+    outline: none;
+    overflow-y: auto;
+    line-height: 1.8;
+}
+
+.rich-editor:focus {
+    border-color: #a46c45;
+}
+
+.rich-editor ul,
+.rich-editor ol {
+    padding-left: 25px;
+}
+
+
+/* Note Version History */
+
+.history-list {
+    display: grid;
+    gap: 18px;
+    margin-top: 30px;
+}
+
+.history-card {
+    padding: 22px;
+    border: 1px solid #e2dbd1;
+    background: #fffdf9;
+}
+
+.history-content {
+    color: #594b3e;
+    font-size: 15px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+
+
+/* =================================
+   RESPONSIVE DESIGN - INKWELL
+================================= */
+
+/* Tablet devices */
+@media screen and (max-width: 768px) {
+
+    .container {
+        width: 90%;
+        max-width: 100%;
+        padding: 25px 0;
+    }
+
+    .navbar {
+        flex-wrap: wrap;
+        gap: 15px;
+        padding: 18px 5%;
+    }
+
+    .navbar nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .profile {
+        font-size: 12px;
+    }
+
+    .welcome-section {
+        padding: 45px 0;
+    }
+
+    .welcome-section h1 {
+        font-size: 38px;
+    }
+
+    .section-heading {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .notes-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .search-form {
+        flex-wrap: wrap;
+    }
+
+    .search-input {
+        min-width: 0;
+    }
+
+    .editor-section {
+        width: 100%;
+    }
+
+    .content-input,
+    .rich-editor {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+
+/* Mobile devices */
+@media screen and (max-width: 480px) {
+
+    body {
+        font-size: 14px;
+    }
+
+    .container {
+        width: 92%;
+        padding: 20px 0;
+    }
+
+    .navbar {
+        padding: 15px 4%;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .navbar .logo {
+        width: 100%;
+        text-align: center;
+    }
+
+    .navbar nav {
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .profile {
+        width: 100%;
+    }
+
+    .welcome-section {
+        padding: 35px 0;
+    }
+
+    .welcome-section h1 {
+        font-size: 30px;
+        line-height: 1.3;
+    }
+
+    .subtitle {
+        font-size: 14px;
+    }
+
+    .section-heading h2 {
+        font-size: 23px;
+    }
+
+    .notes-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .note-card {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .search-form {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .search-input,
+    .sort-select,
+    .search-button {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .notes-filter {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .editor-section h1 {
+        font-size: 29px;
+    }
+
+    .title-input {
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 21px;
+    }
+
+    .rich-editor {
+        min-height: 250px;
+        padding: 14px;
+    }
+
+    .editor-toolbar {
+        gap: 5px;
+        padding: 8px;
+    }
+
+    .editor-toolbar button {
+        padding: 7px 10px;
+    }
+
+    .editor-actions {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .editor-actions a,
+    .editor-actions button {
+        max-width: 100%;
+    }
+
+    .create-button {
+        display: inline-block;
+        text-align: center;
+    }
+
+    .history-card {
+        padding: 15px;
+    }
+}
+
+
+/* Tags displayed on note cards */
+
+.note-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.note-tag {
+    display: inline-block;
+    padding: 6px 11px;
+    background: #eee7dc;
+    color: #76583e;
+    text-decoration: none;
+    font-size: 12px;
+    border-radius: 3px;
+}
+
+.note-tag:hover {
+    background: #e2d5c5;
+}
+
+/* Clickable folder name */
+
+.note-folder {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    font-size: 13px;
+    color: #a46c45;
+}
+
+.note-folder-link {
+    color: #a46c45;
+    text-decoration: none;
+}
+
+.note-folder-link:hover {
+    text-decoration: underline;
+}

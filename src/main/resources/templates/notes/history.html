@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Version History | Inkwell</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="/" class="logo">inkwell<span>.</span></a>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/notes" class="active">My Notes</a>
+    </nav>
+
+    <div class="profile">Personal Space</div>
+</header>
+
+<main class="container">
+
+    <section class="editor-section">
+
+        <p class="eyebrow">YOUR NOTE HISTORY</p>
+
+        <h1>Version History</h1>
+
+        <h2 th:text="${note.title}">Note title</h2>
+
+        <div th:if="${#lists.isEmpty(versions)}"
+             class="empty-state">
+
+            <h3>No previous versions yet.</h3>
+
+            <p>
+                Your previous note content will appear here
+                whenever you make changes.
+            </p>
+
+        </div>
+
+        <div class="history-list">
+
+            <article class="history-card"
+                     th:each="version : ${versions}">
+
+                <p class="note-date"
+                   th:text="${#temporals.format(version.savedAt, 'dd MMM yyyy, HH:mm')}">
+                </p>
+
+                <p class="history-content"
+                   th:text="${versionPreviews[version.id]}">
+                </p>
+
+            </article>
+
+        </div>
+
+        <div class="editor-actions">
+
+            <a th:href="@{/notes/view/{id}(id=${note.id})}"
+               class="create-button">
+                Back to Note
+            </a>
+
+            <a th:href="@{/notes}"
+               class="cancel-button">
+                Back to Notes
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>

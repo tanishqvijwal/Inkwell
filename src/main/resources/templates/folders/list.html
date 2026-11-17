@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Folders | Inkwell</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <a href="/" class="logo">inkwell<span>.</span></a>
+
+    <nav>
+        <a th:href="@{/}">Home</a>
+        <a th:href="@{/notes}">My Notes</a>
+        <a th:href="@{/folders}" class="active">Folders</a>
+        <a th:href="@{/tags}">Tags</a>
+    </nav>
+
+    <div class="profile">Personal Space</div>
+
+</header>
+
+<main class="container">
+
+    <section class="notes-section">
+
+        <p class="eyebrow">YOUR COLLECTION</p>
+
+        <div class="section-heading">
+
+            <div>
+                <h2>My Folders</h2>
+                <p>Organise your notes into collections.</p>
+            </div>
+
+            <a th:href="@{/folders/new}" class="create-button">
+                + Create Folder
+            </a>
+
+        </div>
+
+        <!-- Error Message -->
+        <div th:if="${error == 'not-empty'}"
+             class="error-message">
+
+            This folder contains notes. Move or unassign those notes
+            before deleting the folder.
+
+        </div>
+
+        <!-- Empty State -->
+        <div th:if="${#lists.isEmpty(folders)}"
+             class="empty-state">
+
+            <div class="empty-icon">▤</div>
+
+            <h3>No folders yet.</h3>
+
+            <p>Create your first folder to organise your notes.</p>
+
+            <a th:href="@{/folders/new}" class="create-button">
+                Create Your First Folder
+            </a>
+
+        </div>
+
+        <!-- Folder Cards -->
+        <div class="notes-grid">
+
+            <article class="note-card"
+                     th:each="folder : ${folders}">
+
+                <div class="folder-icon">▱</div>
+
+                <h3 th:text="${folder.name}">
+                    Folder Name
+                </h3>
+
+                <p class="note-content"
+                   th:text="${#lists.size(folder.notes) + ' notes'}">
+                    0 notes
+                </p>
+
+                <div class="note-actions">
+
+                    <!-- Open Folder -->
+                    <a th:href="@{/folders/{id}(id=${folder.id})}">
+                        Open
+                    </a>
+
+                    <!-- Rename Folder -->
+                    <a th:href="@{/folders/edit/{id}(id=${folder.id})}">
+                        Rename
+                    </a>
+
+                    <!-- Delete Folder -->
+                    <form th:action="@{/folders/delete/{id}(id=${folder.id})}"
+                          method="post"
+                          onsubmit="return confirm('Delete this folder?');">
+
+                        <button type="submit" class="delete-button">
+                            Delete
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>

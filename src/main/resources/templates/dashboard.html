@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Inkwell | Your Personal Journal</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="/" class="logo">inkwell<span>.</span></a>
+
+    <nav>
+        <a href="/" class="active">Home</a>
+        <a th:href="@{/notes}">My Notes</a>
+        <a th:href="@{/folders}">Folders</a>
+        <a th:href="@{/tags}">Tags</a>
+    </nav>
+
+    <div class="profile">
+        Personal Space
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="welcome-section">
+
+        <p class="eyebrow">YOUR PERSONAL WRITING SPACE</p>
+
+        <h1>
+            Welcome to
+            <span th:text="${appName}">Inkwell</span>.
+        </h1>
+
+        <p class="subtitle"
+           th:text="${tagline}">
+            A quiet space for your thoughts.
+        </p>
+
+        <a th:href="@{/notes/new}" class="create-button">
+            + Create a new note
+        </a>
+
+    </section>
+
+
+    <section class="notes-section">
+
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">YOUR COLLECTION</p>
+                <h2>Recent Notes</h2>
+            </div>
+
+            <a th:href="@{/notes}">View all notes →</a>
+        </div>
+
+        <!-- Display recent notes -->
+        <div class="notes-grid">
+
+            <article class="note-card"
+                     th:each="note : ${recentNotes}">
+
+                <p class="note-date"
+                   th:text="${#temporals.format(note.updatedAt, 'dd MMM yyyy')}">
+                </p>
+
+                <h3 th:text="${note.title}">Note title</h3>
+
+                <p class="note-content"
+                   th:text="${recentNotePreviews[note.id]}">
+                    Note content
+                </p>
+
+                <div class="note-actions">
+                    <a th:href="@{/notes/view/{id}(id=${note.id})}">
+                        View
+                    </a>
+
+                    <a th:href="@{/notes/edit/{id}(id=${note.id})}">
+                        Edit
+                    </a>
+                </div>
+
+            </article>
+
+        </div>
+
+        <!-- Display when no notes exist -->
+        <div th:if="${#lists.isEmpty(recentNotes)}"
+             class="empty-state">
+
+            <div class="empty-icon">✎</div>
+
+            <h3>Your story starts here.</h3>
+
+            <p>
+                Your thoughts, ideas and inspirations
+                will find a home here.
+            </p>
+
+            <a th:href="@{/notes/new}" class="create-button">
+                Create your first note
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+        <p>INKWELL — A SPACE FOR THOUGHTS</p>
+    </footer>
+
+</main>
+
+</body>
+</html>

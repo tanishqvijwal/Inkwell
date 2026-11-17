@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Tags | Inkwell</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <a href="/" class="logo">inkwell<span>.</span></a>
+
+    <nav>
+        <a th:href="@{/}">Home</a>
+        <a th:href="@{/notes}">My Notes</a>
+        <a th:href="@{/folders}">Folders</a>
+        <a th:href="@{/tags}" class="active">Tags</a>
+    </nav>
+
+    <div class="profile">Personal Space</div>
+
+</header>
+
+<main class="container">
+
+    <section class="notes-section">
+
+        <p class="eyebrow">YOUR COLLECTION</p>
+
+        <div class="section-heading">
+
+            <div>
+                <h2>My Tags</h2>
+                <p>Organise your notes by topics and interests.</p>
+            </div>
+
+            <a th:href="@{/tags/new}" class="create-button">
+                + Create Tag
+            </a>
+
+        </div>
+
+        <!-- Empty State -->
+        <div th:if="${#lists.isEmpty(tags)}"
+             class="empty-state">
+
+            <div class="empty-icon">#</div>
+
+            <h3>No tags created yet.</h3>
+
+            <p>Create your first tag to organise your notes.</p>
+
+            <a th:href="@{/tags/new}" class="create-button">
+                Create Your First Tag
+            </a>
+
+        </div>
+
+        <!-- Tags Grid -->
+        <div class="notes-grid">
+
+            <article class="note-card"
+                     th:each="tag : ${tags}">
+
+                <div class="folder-icon">#</div>
+
+                <h3 th:text="${tag.name}">
+                    Tag Name
+                </h3>
+
+                <p class="note-content"
+                   th:text="${#lists.size(tag.notes) + ' notes'}">
+                    0 notes
+                </p>
+
+                <div class="note-actions">
+
+                    <a th:href="@{/tags/{id}(id=${tag.id})}">
+                        Open
+                    </a>
+
+                    <form th:action="@{/tags/delete/{id}(id=${tag.id})}"
+                          method="post"
+                          onsubmit="return confirm('Delete this tag?');">
+
+                        <button type="submit" class="delete-button">
+                            Delete
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>

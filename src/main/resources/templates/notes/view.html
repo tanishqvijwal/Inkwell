@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Note | Inkwell</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="/" class="logo">inkwell<span>.</span></a>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/notes" class="active">My Notes</a>
+    </nav>
+
+    <div class="profile">Personal Space</div>
+</header>
+
+<main class="container">
+
+    <section class="editor-section">
+
+        <p class="eyebrow">YOUR NOTE</p>
+
+        <h1 th:utext="${note.title}">Note title</h1>
+
+        <p class="note-date"
+           th:utext="${#temporals.format(note.updatedAt, 'dd MMM yyyy, HH:mm')}">
+        </p>
+
+        <div class="view-content"
+             th:utext="${safeContent}">
+        </div>
+
+        <div class="note-tags"
+             th:if="${not #sets.isEmpty(note.tags)}">
+
+    <span th:each="tag : ${note.tags}"
+          class="note-tag"
+          th:utext="${tag.name}">
+    </span>
+
+        </div>
+
+        <div class="editor-actions">
+
+            <a th:href="@{/notes/edit/{id}(id=${note.id})}"
+               class="create-button">
+                Edit Note
+            </a>
+            <a th:href="@{/notes/history/{id}(id=${note.id})}"
+               class="cancel-button">
+                Version History
+            </a>
+
+            <a th:href="@{/notes/export/{id}(id=${note.id})}"
+               class="cancel-button">
+                Export PDF ↓
+            </a>
+
+            <a th:href="@{/notes}" class="cancel-button">
+                Back to Notes
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>

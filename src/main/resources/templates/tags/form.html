@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Tag | Inkwell</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <a href="/" class="logo">inkwell<span>.</span></a>
+
+    <nav>
+        <a th:href="@{/}">Home</a>
+        <a th:href="@{/notes}">My Notes</a>
+        <a th:href="@{/folders}">Folders</a>
+        <a th:href="@{/tags}" class="active">Tags</a>
+    </nav>
+
+    <div class="profile">Personal Space</div>
+
+</header>
+
+<main class="container">
+
+    <section class="editor-section">
+
+        <p class="eyebrow">YOUR COLLECTION</p>
+
+        <h1>Create a Tag</h1>
+
+        <p class="subtitle">
+            Give your notes a meaningful category.
+        </p>
+
+        <form th:action="@{/tags/save}"
+              th:object="${tag}"
+              method="post">
+
+            <div class="form-group">
+
+                <label for="name">Tag Name</label>
+
+                <input type="text"
+                       id="name"
+                       th:field="*{name}"
+                       class="title-input"
+                       placeholder="Enter tag name..."
+                       maxlength="100"
+                       required>
+
+            </div>
+
+            <div class="editor-actions">
+
+                <button type="submit" class="create-button">
+                    Save Tag
+                </button>
+
+                <a th:href="@{/tags}"
+                   class="cancel-button">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </section>
+
+</main>
+
+</body>
+</html>

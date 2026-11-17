@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Write a Note | Inkwell</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="/" class="logo">inkwell<span>.</span></a>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/notes" class="active">My Notes</a>
+    </nav>
+
+    <div class="profile">Personal Space</div>
+</header>
+
+<main class="container">
+
+    <section class="editor-section">
+
+        <p class="eyebrow">YOUR PERSONAL WRITING SPACE</p>
+
+        <h1 th:text="${note.id == null ? 'A new thought.' : 'Continue writing.'}">
+            A new thought.
+        </h1>
+
+        <form th:action="@{/notes/save}"
+              th:object="${note}"
+              method="post">
+
+            <input type="hidden" th:field="*{id}">
+
+            <input type="text"
+                   th:field="*{title}"
+                   placeholder="Give your note a title..."
+                   class="title-input"
+                   maxlength="200"
+                   required>
+
+            <!-- Rich Text Toolbar -->
+            <div class="editor-toolbar">
+
+                <button type="button" data-command="bold">
+                    <b>B</b>
+                </button>
+
+                <button type="button" data-command="italic">
+                    <i>I</i>
+                </button>
+
+                <button type="button" data-command="underline">
+                    <u>U</u>
+                </button>
+
+                <button type="button" data-command="insertUnorderedList">
+                    • List
+                </button>
+
+                <button type="button" data-command="insertOrderedList">
+                    1. List
+                </button>
+
+            </div>
+
+            <!-- Editable Content Area -->
+            <div id="richEditor"
+                 class="content-input rich-editor"
+                 contenteditable="true"
+                 th:utext="${safeContent}">
+            </div>
+
+            <!-- Hidden field to submit editor content -->
+            <textarea id="content"
+                      th:field="*{content}"
+                      hidden>
+</textarea>
+
+            <div class="form-group">
+                <label for="folderId">Choose Folder</label>
+
+                <select name="folderId" id="folderId" class="folder-select">
+
+                    <option value="">Unfiled</option>
+
+                    <option th:each="folder : ${folders}"
+                            th:value="${folder.id}"
+                            th:text="${folder.name}"
+                            th:selected="${note.folder != null and note.folder.id == folder.id}">
+                    </option>
+
+                </select>
+            </div>
+
+            <div class="form-group">
+
+                <label>Choose Tags</label>
+
+                <div class="tag-options">
+
+                    <label class="tag-option"
+                           th:each="tag : ${tags}">
+
+                        <input type="checkbox"
+                               name="tagIds"
+                               th:value="${tag.id}"
+                               th:checked="${note.tags.contains(tag)}">
+
+                        <span th:text="${tag.name}"></span>
+
+                    </label>
+
+                    <p th:if="${#lists.isEmpty(tags)}">
+                        No tags available. Create a tag first.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="editor-actions">
+
+                <button type="submit" class="create-button">
+                    Save Note
+                </button>
+
+                <a th:href="@{/notes}" class="cancel-button">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </section>
+
+</main>
+
+<script>
+
+
+    const editor = document.getElementById("richEditor");
+    const contentField = document.getElementById("content");
+
+    // Preserve text selection when clicking toolbar buttons
+    document.querySelectorAll("[data-command]").forEach(button => {
+
+        button.addEventListener("mousedown", function(event) {
+            event.preventDefault();
+        });
+
+        button.addEventListener("click", function() {
+
+            editor.focus();
+
+            const command = this.getAttribute("data-command");
+
+            document.execCommand(command, false, null);
+
+            contentField.value = editor.innerHTML;
+        });
+
+    });
+
+    // Synchronize editor content with hidden textarea
+    editor.addEventListener("input", function() {
+        contentField.value = editor.innerHTML;
+    });
+
+    // Synchronize before saving
+    document.querySelector("form").addEventListener("submit", function() {
+        contentField.value = editor.innerHTML;
+    });
+
+    button.addEventListener("mousedown", function(event) {
+        event.preventDefault();
+    });
+</script>
+</body>
+</html>
